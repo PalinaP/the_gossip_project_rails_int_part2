@@ -1,0 +1,16 @@
+<body class="container">
+
+<h1> Bienvenu sur le site Gossip </h1>
+<h2> Tu trouveras ici tous les derniers gossips les plus croustillants! </h2><br/>
+
+
+<% Gossip.all.each do |g| %>
+
+<p> <%= link_to "Gossip n° #{g.id}", potin_path(g.id) %> </p>
+<p> Title : <%= g.title %> </p>
+<p> Author : <%= g.author.first_name %> <%= g.author.last_name %>  </p><br/>
+
+<% end %>
+
+
+</body>

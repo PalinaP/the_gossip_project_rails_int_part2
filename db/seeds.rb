@@ -5,3 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.destroy_all
+user_array = []
+5.times do
+  u = User.create(
+    first_name:Faker::Name.first_name,
+    last_name:Faker::Name.last_name
+  )
+user_array << u.id
+end
+
+
+Gossip.destroy_all
+20.times do
+  Gossip.create(
+    title:Faker::Book.title,
+    content:Faker::Movie.quote,
+    author_id: user_array.sample
+  )
+end

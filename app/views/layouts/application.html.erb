@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TheGossipProjectRailsIntPart1</title>
+    <title>Gossips</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
   </head>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" <%= link_to "Home", home_path %> <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" <%= link_to "Team", team_path %></a>
+          <a class="nav-item nav-link" <%= link_to "Contact", contact_path %></a>
+        </div>
+      </div>
+    </nav> <br/>
+  </header>
 
   <body>
     <%= yield %>
