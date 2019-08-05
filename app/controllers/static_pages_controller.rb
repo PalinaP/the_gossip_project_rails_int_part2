@@ -9,6 +9,7 @@ end
 
 
 def home
+  @number_potin = Gossip.all.length
 end
 
 def potin
