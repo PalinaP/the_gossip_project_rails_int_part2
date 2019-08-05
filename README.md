@@ -5,20 +5,21 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version:2.5.1
 
-* System dependencies
+* To launch the program, clone it, go to main folder in your terminal and write:
+bundle install
+rails db:create
+rails db:seed
+rails server
 
-* Configuration
+* To visit the website write in your browser search bar:
+localhost:3000/home
 
-* Database creation
+you can naviagte through the following pages with the navbar:
+localhost:3000/home
+localhost:3000/team
+localhost:3000/contact
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* You can also visit a welcome page customized with your name at:
+localhost:3000/welcom/yourname
