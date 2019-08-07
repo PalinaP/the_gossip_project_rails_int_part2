@@ -3,12 +3,23 @@
 <h1> Bienvenu sur le site Gossip </h1>
 <h2> Tu trouveras ici tous les derniers gossips les plus croustillants! </h2><br/>
 
+<!-- button create new gossip -->
+<button type="button" class="btn btn-outline-primary btn-lg"><%= link_to "Create a new gossip", new_gossip_path %></button>
+
+<!--Alert message if new gossip successfully saved-->
+<% if alert == "success" %>
+ <div class="alert alert-success" role="alert">
+   <p>Your gossip has been correctly saved.</p>
+ </div>
+ <% end %>
+ <br/>
+
 <div class="row">
   <% Gossip.all.each do |g| %>
 
   <div class="card col-md-3 m-2">
     <div class="card-header">
-      <%= link_to "Gossip n° #{g.id}", potin_path(g.id) %>
+      <%= link_to "Gossip n° #{g.id}", gossip_path(g.id) %>
     </div>
     <div class="card-body">
       <blockquote class="blockquote mb-0">

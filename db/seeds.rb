@@ -16,6 +16,8 @@ user_array = []
 user_array << u.id
 end
 
+puts "5 users have been created"
+
 
 Gossip.destroy_all
 20.times do
@@ -25,3 +27,5 @@ Gossip.destroy_all
     author_id: user_array.sample
   )
 end
+
+puts "20 gossips have been created"

@@ -9,7 +9,7 @@
 			Sa date de création : <%= @gossip.created_at %>
     </p>
 
-		<p> <%= link_to "#{@gossip.author.first_name} #{@gossip.author.last_name}", profil_path(@gossip.author.id) %> </p>
+		<p> <%= link_to "#{@gossip.author.first_name} #{@gossip.author.last_name}", user_path(@gossip.author.id) %> </p>
 
 
 </body>
