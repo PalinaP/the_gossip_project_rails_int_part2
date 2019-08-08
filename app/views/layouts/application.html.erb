@@ -25,9 +25,9 @@
   </head>
 
   <header>
-
+    
     <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav mr-auto">
@@ -42,9 +42,11 @@
           </li>
         </ul>
 
+        <% if session[:user_id] != nil %>
         <ul class="navbar-nav mr-auto">
           <li> <%= current_user.first_name %> <%= current_user.last_name %> </li>
         </ul>
+        <% end %>
 
         <ul class="navbar-nav mr-rg">
         <form class="form-inline my-2 my-lg-0">

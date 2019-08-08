@@ -21,66 +21,45 @@ end
 
 puts "5 cities have been created"
 
-# creation of 5 users (belongs_to city)
+# creation of 10 users (belongs_to city)
 User.destroy_all
 user_array = []
-5.times do
+10.times do
   u = User.create(
     first_name:Faker::Name.first_name,
     last_name:Faker::Name.last_name,
     city_id: city_array.sample,
     description:" ",
     email:Faker::Internet.email,
-    age:rand(18..100)
+    age:rand(18..100),
+    password:Faker::Alphanumeric.alpha(number: 10)
   )
 user_array << u.id
 end
 
-puts "5 users have been created"
+puts "10 users have been created"
 
-# creation of 50 gossips (belongs_to author)
+# creation of 30 gossips (belongs_to author)
 Gossip.destroy_all
 gossip_array = []
-50.times do
+30.times do
   g = Gossip.create(
-    title:"mon titre",
+    title:Faker::Book.title,
     content:Faker::Movie.quote,
     author_id: user_array.sample
   )
 gossip_array << g.id
 end
 
-puts "20 gossips have been created"
+puts "30 gossips have been created"
 
-# creation of one anonymous user
-a = User.create(
-  first_name:"anonymous",
-  last_name:"mysterious",
-  city_id: City.last.id,
-  description:" ",
-  email:"anonymous@gmail.com",
-  age:rand(18..100)
-)
-user_array << a.id
-puts "user anonymous has been created"
-
-# creation of 10 gossips for anonymous user
-10.times do
-  Gossip.create(
-    title:Faker::Book.title,
-    content:Faker::Movie.quote,
-    author_id: user_array.last
-  )
-end
-
-puts "5 gossips have been created for user anonymous"
 
 
 # creation of 20 comments
 Comment.destroy_all
 20.times do
   Comment.create(
-    content:"mon commentaire",
+    content:Faker::Movie.quote,
     gossip_id:gossip_array.sample,
     commentator_id:user_array.sample,
   )

@@ -1,6 +1,10 @@
-<body class="container">
+<header>
 
-<h1> Page Modification Commentaire </h1>
+</header>
+
+<body class="container">
+<br />
+<h1 class="lead"> Modification du commentaire</h1>
 
   <!--Alert message if save fail-->
   <% if @comment.errors.any? %>
@@ -19,7 +23,7 @@
   <!--form completed with comment data, fields can be modified for update -->
   <%= form_tag url_for(action: 'update'), method: "patch" do %>
 
-    <%= label_tag 'Update your comment:' %>
+    <%= label_tag 'Update your comment:' %><br />
     <%= text_area_tag 'content', @comment.content %>
     <br /> <br />
 

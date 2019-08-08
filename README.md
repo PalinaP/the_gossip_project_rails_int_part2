@@ -13,12 +13,8 @@ rails db:seed
 rails server
 
 * To visit the website write in your browser search bar:
-localhost:3000/home
+localhost:3000/gossips
 
-you can naviagte through the following pages with the navbar:
-localhost:3000/home
-localhost:3000/team
-localhost:3000/contact
+* Use the navbar to naviagte through the different pages
 
-* You can also visit a welcome page customized with your name at:
-localhost:3000/welcom/yourname
+* User the Sign In / Log In buttons to create a user session

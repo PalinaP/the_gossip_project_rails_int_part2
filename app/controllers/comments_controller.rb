@@ -26,6 +26,11 @@ class CommentsController < ApplicationController
 
   def edit
       @comment = Comment.find_by(id:params[:id])
+      # on empêche un utilisateur autre que le commentateur d'accéder à la page d'édition du potin
+      if current_user != @comment.commentator || current_user == nil
+        redirect_to :gossips
+      end
+
   end
 
   def update

@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     @user.city_id = user_city.id
 
     if @user.save # essaie de sauvegarder en base @gossip
+      session[:user_id] = @user.id
       redirect_to gossips_path
     else
       # sinon, il render la view new (qui est celle sur laquelle on est déjà)
