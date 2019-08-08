@@ -1,8 +1,12 @@
 class GossipsController < ApplicationController
 
+  # on vérifie que l'utilisateur est loggué pour créer un potin
+  before_action :authenticate_user, only: [:new, :create, :show]
+
   def index
     # Méthode qui récupère tous les potins et les envoie à la view index (index.html.erb) pour affichage
-    @number_potin = Gossip.all.length
+    # tri des gossips par ordre de modification
+    @gossips = Gossip.all.sort_by{|gossip| gossip[:updated_at]}.reverse
   end
 
   def show
@@ -20,10 +24,10 @@ class GossipsController < ApplicationController
     # pour info, le contenu de ce formulaire sera accessible dans le hash params (ton meilleur pote)
     # Une fois la création faite, on redirige généralement vers la méthode show (pour afficher le potin créé)
     @gossip = Gossip.new(title:params[:title], content:params[:content]) # avec xxx qui sont les données obtenues à partir du formulaire
-    @gossip.author = User.find_by(first_name:"anonymous")
+    @gossip.author = current_user
 
     if @gossip.save # essaie de sauvegarder en base @gossip
-      redirect_to({ :action=>'index' }, :alert => "save")  # si ça marche, il redirige vers la page d'index du site
+      redirect_to({ :action=>'index' }, :alert => "gossip_saved")  # si ça marche, il redirige vers la page d'index du site
     else
       # sinon, il render la view new (qui est celle sur laquelle on est déjà)
       render :new
@@ -41,7 +45,7 @@ class GossipsController < ApplicationController
     # Une fois la modification faite, on redirige généralement vers la méthode show (pour afficher le potin modifié)
     @gossip = Gossip.find_by(id:params[:id])
     if @gossip.update(title:params[:title], content:params[:content])
-      redirect_to({ :action=>'show' }, :alert => "success")
+      redirect_to({ :action=>'show' }, :alert => "gossip_updated")
     else
       render :edit
     end
@@ -56,4 +60,16 @@ class GossipsController < ApplicationController
     redirect_to({ :action=>'index' }, :alert => "delete")
 
   end
+
+  private
+
+  def authenticate_user
+    unless current_user
+      flash[:danger] = "Please log in to create or consult a gossip."
+      redirect_to gossips_path
+    end
+  end
+
+
+
 end

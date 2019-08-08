@@ -2,20 +2,34 @@
 
 <h1> Page Potin </h1>
 
-	<!--Alert message if new gossip successfully saved-->
-	<% if alert == "success" %>
+	<!--Alert message if new gossip successfully updated-->
+	<% if alert == "gossip_updated" %>
 	 <div class="alert alert-success" role="alert">
 	   <p>Your gossip has been correctly updated.</p>
 	 </div>
+	 <!--Alert message if new comment successfully created-->
+	 <% elsif alert == "comment_saved" %>
+		<div class="alert alert-success" role="alert">
+			<p>Your comment has been correctly saved.</p>
+		</div>
+		<!--Alert message if new comment successfully deleted-->
+		<% elsif alert == "comment_deleted" %>
+		 <div class="alert alert-success" role="alert">
+			 <p>Your comment has been correctly deleted.</p>
+		 </div>
 	 <% end %>
 	 <br/>
 
+	 	<!--Information du potin -->
 		 <h2> Voici la page du potin n°<%= @gossip.id%> </h2>
      <p>
 			Son titre : <%= @gossip.title %> <br/>
       Son contenu : <%= @gossip.content %> <br/>
 			Sa date de création : <%= @gossip.created_at %> <br/>
+			<!-- on affiche le bouton de modification que si le user connecté est l'autheur -->
+			<% if current_user == @gossip.author %>
 			<%= link_to "Modifier le gossip", edit_gossip_path(@gossip.id) %>
+			<% end %>
     </p>
 
 		<p> Son auteur : <%= @gossip.author.first_name %> <%= @gossip.author.last_name %>  <br/>
@@ -24,24 +38,40 @@
 		<p> La ville de son auteur : <%= @gossip.author.city.name %>  <br/>
 		<%= link_to "Visiter la page de la ville #{@gossip.author.city.name}", city_path(@gossip.author.city.id) %> </p>
 
+		<!-- on affiche le bouton de suppression que si le user connecté est l'autheur -->
+		<% if current_user == @gossip.author %>
 		<p>
 		<%= link_to "Supprimer le potin", gossip_path(@gossip.id),
               method: :delete,
               data: { confirm: 'Are you sure?' } %> </p>
+		<% end %>
 
-	  <p>
 
 		<!--form for new comment -->
-		<h4> Laisser un commentaire </h4>
-	  <%= form_tag url_for(controller: 'comments', action: 'create', method: "post") do %>
+		<%= form_tag url_for(controller: 'comments', action: 'create', method: 'post') do %>
+		 <%= label_tag 'Laisser un commentaire!' %><br/>
+		 <%= text_area_tag 'content' %>
+		 <%= hidden_field_tag 'gossip_id', @gossip.id %>
+		 <br /> <br />
+		 <%= submit_tag "Post your comment" %><br/>
+		<% end %>
 
-	    <%= label_tag 'Your comment' %>
-	    <%= text_field_tag 'content' %>
-	    <br /> <br />
-	    <%= hidden_field_tag 'gossip_id', "#{@gossip.id}" %>
-	    <%= submit_tag "Post your comment" %>
+		<!-- on afficher tous les commentaires liés au gossip -->
+		<% @gossip.comments.each do |c| %>
 
-	  <% end %>
+		<div class "row">
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title"> <%= c.commentator.first_name %> <%= c.commentator.last_name %> </h5>
+			    <h6 class="card-subtitle mb-2 text-muted"> Dernière mise à jour : <%= c.updated_at %></h6>
+			    <p class="card-text"> <%= c.content %> </p>
+			    <a class="card-link" <%= link_to "Modifier", edit_comment_path(c.id) %></a>
+			  </div>
+			</div>
+		</div>
+
+		<% end %>
+
 
 
 </body>

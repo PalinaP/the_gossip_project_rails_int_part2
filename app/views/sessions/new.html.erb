@@ -1,0 +1,34 @@
+<body class = container >
+
+  <h1> Connexion à votre session utilisateur </h1>
+
+  <!-- message d'erreur si l'authentification n'a pas marché-->
+  <% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
+
+  <p> Veuillez saisir les informations ci-dessous pour vous connecter à votre session Gossips </p>
+
+  <!--form for new session -->
+  <form action= <%= sessions_path %> method="POST">
+
+  <fieldset>
+    <input type="hidden" name="authenticity_token" value=<%= form_authenticity_token %> >
+
+    <legend>Veuillez saisir les informations ci-dessous pour vous connecter à votre session Gossips</legend>
+
+      <legend>Email :</legend>
+
+      <input type="title" name="email">
+
+      <legend>Password :</legend>
+
+      <input type="content" name="password"> <br/>
+
+      <input type="submit" value="Me connecter">
+
+  </fieldset>
+
+</form>
+
+</body>

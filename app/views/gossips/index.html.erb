@@ -6,11 +6,17 @@
 <!-- button create new gossip -->
 <button type="button" class="btn btn-outline-primary btn-lg"><%= link_to "Create a new gossip", new_gossip_path %></button>
 
+<!-- message d'erreur si l'utilsateur n'est pas connecté et veut créer un potin-->
+<% flash.each do |key, value| %>
+<div class="alert alert-<%= key %>"><%= value %></div>
+<% end %>
+
 <!--Alert message if new gossip successfully saved-->
-<% if alert == "save" %>
+<% if alert == "gossip_saved" %>
  <div class="alert alert-success" role="alert">
    <p>Your gossip has been correctly saved.</p>
  </div>
+<!--Alert message if gossip successfully deleted-->
 <% elsif alert == "delete" %>
   <div class="alert alert-success" role="alert">
     <p>Your gossip has been deleted.</p>
@@ -19,7 +25,9 @@
  <br/>
 
 <div class="row">
-  <% Gossip.all.each do |g| %>
+
+  <!-- Affichage des gossips dans des cards -->
+  <% @gossips.each do |g| %>
 
   <div class="card col-md-3 m-2">
     <div class="card-header">
