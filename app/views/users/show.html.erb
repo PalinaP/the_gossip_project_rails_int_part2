@@ -3,7 +3,16 @@
 <h1> Page Profil </h1>
 
 		 <h2> Voici le profil de l'auteur <%= @author.first_name%> <%= @author.last_name%> </h2>
+		 <p>
+		     Son prénom : <%= @author.first_name%> <br/>
+		     Son nom : <%= @author.last_name%> <br/>
+		     Sa description : <%= @author.description%> <br/>
+		     Son e-mail : <%= @author.email%> <br/>
+		     Son age : <%= @author.age%> <br/>
+		     Le nom de sa ville : <%= @author.city.name%> <br/>
+				 <%= link_to "Visiter la page de la ville #{@author.city.name}", city_path(@author.city.id) %>
 
-     <p> D'autres informations concernant cet auteur viendront s'afficher ici dans la semaine </p>
+
+     </p>
 
 </body>

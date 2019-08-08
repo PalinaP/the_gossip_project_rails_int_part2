@@ -2,14 +2,46 @@
 
 <h1> Page Potin </h1>
 
+	<!--Alert message if new gossip successfully saved-->
+	<% if alert == "success" %>
+	 <div class="alert alert-success" role="alert">
+	   <p>Your gossip has been correctly updated.</p>
+	 </div>
+	 <% end %>
+	 <br/>
+
 		 <h2> Voici la page du potin n°<%= @gossip.id%> </h2>
      <p>
-     	Son auteur : <%= @gossip.author.first_name %> <%= @gossip.author.last_name %>  <br/>
+			Son titre : <%= @gossip.title %> <br/>
       Son contenu : <%= @gossip.content %> <br/>
-			Sa date de création : <%= @gossip.created_at %>
+			Sa date de création : <%= @gossip.created_at %> <br/>
+			<%= link_to "Modifier le gossip", edit_gossip_path(@gossip.id) %>
     </p>
 
-		<p> <%= link_to "#{@gossip.author.first_name} #{@gossip.author.last_name}", user_path(@gossip.author.id) %> </p>
+		<p> Son auteur : <%= @gossip.author.first_name %> <%= @gossip.author.last_name %>  <br/>
+			<%= link_to "Visiter le profil de #{@gossip.author.first_name} #{@gossip.author.last_name}", user_path(@gossip.author.id) %> </p>
+
+		<p> La ville de son auteur : <%= @gossip.author.city.name %>  <br/>
+		<%= link_to "Visiter la page de la ville #{@gossip.author.city.name}", city_path(@gossip.author.city.id) %> </p>
+
+		<p>
+		<%= link_to "Supprimer le potin", gossip_path(@gossip.id),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %> </p>
+
+	  <p>
+
+		<!--form for new comment -->
+		<h4> Laisser un commentaire </h4>
+	  <%= form_tag url_for(controller: 'comments', action: 'create', method: "post") do %>
+
+	    <%= label_tag 'Your comment' %>
+	    <%= text_field_tag 'content' %>
+	    <br /> <br />
+	    <%= hidden_field_tag 'gossip_id', "#{@gossip.id}" %>
+	    <%= submit_tag "Post your comment" %>
+
+	  <% end %>
 
 
 </body>

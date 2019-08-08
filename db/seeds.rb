@@ -6,26 +6,84 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# creation of 5 cities
+
+City.destroy_all
+city_array = []
+City.create(name:"Marseille", zip_code:"13000")
+City.create(name:"Montpellier", zip_code:"34000")
+City.create(name:"Toulouse", zip_code:"31000")
+City.create(name:"La Rochelle", zip_code:"17000")
+City.create(name:"Toulon", zip_code:"83000")
+City.all.each do |c|
+  city_array << c.id
+end
+
+puts "5 cities have been created"
+
+# creation of 5 users (belongs_to city)
 User.destroy_all
 user_array = []
 5.times do
   u = User.create(
     first_name:Faker::Name.first_name,
-    last_name:Faker::Name.last_name
+    last_name:Faker::Name.last_name,
+    city_id: city_array.sample,
+    description:" ",
+    email:Faker::Internet.email,
+    age:rand(18..100)
   )
 user_array << u.id
 end
 
 puts "5 users have been created"
 
-
+# creation of 50 gossips (belongs_to author)
 Gossip.destroy_all
-20.times do
-  Gossip.create(
-    title:Faker::Book.title,
+gossip_array = []
+50.times do
+  g = Gossip.create(
+    title:"mon titre",
     content:Faker::Movie.quote,
     author_id: user_array.sample
   )
+gossip_array << g.id
 end
 
 puts "20 gossips have been created"
+
+# creation of one anonymous user
+a = User.create(
+  first_name:"anonymous",
+  last_name:"mysterious",
+  city_id: City.last.id,
+  description:" ",
+  email:"anonymous@gmail.com",
+  age:rand(18..100)
+)
+user_array << a.id
+puts "user anonymous has been created"
+
+# creation of 10 gossips for anonymous user
+10.times do
+  Gossip.create(
+    title:Faker::Book.title,
+    content:Faker::Movie.quote,
+    author_id: user_array.last
+  )
+end
+
+puts "5 gossips have been created for user anonymous"
+
+
+# creation of 20 comments
+Comment.destroy_all
+20.times do
+  Comment.create(
+    content:"mon commentaire",
+    gossip_id:gossip_array.sample,
+    commentator_id:user_array.sample,
+  )
+end
+
+puts "20 comments have been created"

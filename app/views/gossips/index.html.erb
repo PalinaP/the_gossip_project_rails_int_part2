@@ -7,10 +7,14 @@
 <button type="button" class="btn btn-outline-primary btn-lg"><%= link_to "Create a new gossip", new_gossip_path %></button>
 
 <!--Alert message if new gossip successfully saved-->
-<% if alert == "success" %>
+<% if alert == "save" %>
  <div class="alert alert-success" role="alert">
    <p>Your gossip has been correctly saved.</p>
  </div>
+<% elsif alert == "delete" %>
+  <div class="alert alert-success" role="alert">
+    <p>Your gossip has been deleted.</p>
+  </div>
  <% end %>
  <br/>
 

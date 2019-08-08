@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_105007) do
+ActiveRecord::Schema.define(version: 2019_08_07_133454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.string "zip_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.bigint "gossip_id"
+    t.bigint "commentator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentator_id"], name: "index_comments_on_commentator_id"
+    t.index ["gossip_id"], name: "index_comments_on_gossip_id"
+  end
 
   create_table "gossips", force: :cascade do |t|
     t.string "title"
@@ -29,6 +46,13 @@ ActiveRecord::Schema.define(version: 2019_08_05_105007) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.text "description"
+    t.string "email"
+    t.integer "age"
+    t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "comments", "gossips"
+  add_foreign_key "users", "cities"
 end

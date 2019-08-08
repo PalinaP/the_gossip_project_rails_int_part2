@@ -12,17 +12,18 @@ get '/contact', to: 'static_pages#contact'
 
 # ---
 
-resources :gossips
+resources :gossips do
+  resources :comments, controller: 'comments'
+end
 
-# get '/home', to: 'static_pages#home'
-
-# get '/potin/:gossip_id', to: 'static_pages#potin', as:'potin'
 
 # ---
 
 resources :users
 
-# get '/profil/:author_id', to: 'static_pages#profil', as:'profil'
+# ---
+
+resources :cities
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

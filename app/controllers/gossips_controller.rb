@@ -23,7 +23,7 @@ class GossipsController < ApplicationController
     @gossip.author = User.find_by(first_name:"anonymous")
 
     if @gossip.save # essaie de sauvegarder en base @gossip
-      redirect_to({ :action=>'index' }, :alert => "success")  # si ça marche, il redirige vers la page d'index du site
+      redirect_to({ :action=>'index' }, :alert => "save")  # si ça marche, il redirige vers la page d'index du site
     else
       # sinon, il render la view new (qui est celle sur laquelle on est déjà)
       render :new
@@ -32,16 +32,28 @@ class GossipsController < ApplicationController
 
   def edit
     # Méthode qui récupère le potin concerné et l'envoie à la view edit (edit.html.erb) pour affichage dans un formulaire d'édition
+    @gossip = Gossip.find_by(id:params[:id])
   end
 
   def update
     # Méthode qui met à jour le potin à partir du contenu du formulaire de edit.html.erb, soumis par l'utilisateur
     # pour info, le contenu de ce formulaire sera accessible dans le hash params
     # Une fois la modification faite, on redirige généralement vers la méthode show (pour afficher le potin modifié)
+    @gossip = Gossip.find_by(id:params[:id])
+    if @gossip.update(title:params[:title], content:params[:content])
+      redirect_to({ :action=>'show' }, :alert => "success")
+    else
+      render :edit
+    end
   end
 
   def destroy
     # Méthode qui récupère le potin concerné et le détruit en base
     # Une fois la suppression faite, on redirige généralement vers la méthode index (pour afficher la liste à jour)
+    @gossip = Gossip.find_by(id:params[:id])
+    @gossip.destroy
+
+    redirect_to({ :action=>'index' }, :alert => "delete")
+
   end
 end
